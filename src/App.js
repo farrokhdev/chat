@@ -1,24 +1,42 @@
-import logo from './logo.svg';
-import './App.css';
+import { useEffect, useMemo, useState } from "react";
+import { ChatBox } from "./components/ChatBox";
+import { ChatForm } from "./components/ChatForm";
+import io from "socket.io-client";
+import {
+  Box,
+  CssBaseline,
+  ThemeProvider,
+  createTheme,
+  useTheme,
+} from "@mui/material";
 
+import { themeSettings } from "./theme";
+import { Header } from "./components/Header";
+
+const socket = io.connect("http://localhost:3001");
 function App() {
+  const [isChat, setIsChat] = useState(false);
+  const [isDark, setIsDark] = useState(false);
+  const theme = useMemo(() => createTheme(themeSettings(isDark)), [isDark]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={theme}>
+      {/* <CssBaseline /> */}
+      <>
+        <Header isDark={isDark} setIsDark={setIsDark} />
+        <Box className="flex justify-center items-center p-4 w-full h-screen">
+          {isChat ? (
+            <>
+              <ChatBox socket={socket} />
+            </>
+          ) : (
+            <>
+              <ChatForm socket={socket} setIsChat={setIsChat} />
+            </>
+          )}
+        </Box>
+      </>
+    </ThemeProvider>
   );
 }
 
