@@ -10,7 +10,7 @@ const server = http.createServer(app);
 
 const socketCon = new Server(server, {
   cors: {
-    origin: "http://localhost:3000",
+    origin: "https://chat-app-8hqd.onrender.com/",
     methods: ["GET", "POST"],
   },
 });
