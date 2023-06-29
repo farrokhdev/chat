@@ -13,6 +13,7 @@ import {
 import { themeSettings } from "./theme";
 import { Header } from "./components/Header";
 
+// const socket = io.connect("http://localhost:3001");
 const socket = io.connect("https://chat-app-server-xnij.onrender.com");
 function App() {
   const [isChat, setIsChat] = useState(false);
